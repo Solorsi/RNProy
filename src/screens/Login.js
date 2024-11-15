@@ -1,6 +1,6 @@
 import { TouchableOpacity, StyleSheet, Text, View, TextInput } from "react-native";
 import {Component} from 'react'
-// import {db, auth} from "../firebase/config";
+import {auth} from "../firebase/config";
 
 
 export default class Login extends Component {
@@ -8,14 +8,23 @@ export default class Login extends Component {
         super(props);
         this.state = {
             email: '',
-            password: '',
+            password: '', 
+            loggedIn: false,
+            errorMsg: '',
         };
     }
-    handleSubmit(email,pass){
-        console.log('login')
-        // auth.signInWithEmailAndPassword(email, pass)
-        // .then(response => this.setState({registered:true, errorMsg:''}))
+
+    login(email, password){
+        auth.signInWithEmailAndPassword(email, password)
+         .then((response) => {
+             this.setState({loggedIn: true});
+             this.props.navigation.navigate('HomeMenu')
+         })
+         .catch(error => {
+           this.setState({errorMsg: 'Credenciales inválidas.'})
+         })
     }
+
     render(){
         return (
             <View style={styles.container}>
@@ -31,13 +40,17 @@ export default class Login extends Component {
                     secureTextEntry= {true}
                     onChangeText={text => this.setState({password: text})}
                     value= {this.state.password} />
-                <TouchableOpacity style={styles.button} onPress={()=> this.handleSubmit()}> 
+                <TouchableOpacity style={styles.button} onPress={()=> this.login(this.state.email, this.state.password)}> 
                     <Text>Ingresar</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.button} onPress={ ()=> this.props.navigation.navigate('Register')}>
+                    <Text>Ir a Register </Text>
                 </TouchableOpacity>
             </View>
         );
     }
 } 
+
 const styles = StyleSheet.create({
     container:{
         flex:1,
