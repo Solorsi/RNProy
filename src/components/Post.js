@@ -49,11 +49,20 @@ export default class Post extends Component {
 
     }
 
+    formatDateTime =(createdAt)=>{
+        const date = new Date(createdAt)
+        return date.toLocaleString("es-ES", { dateStyle: "short", timeStyle: "short" }).replace(",", " -");
+
+    }
+
     render() {
         return (
             <View style={styles.container}>
                 <Text style={styles.content}> {this.props.post.content}</Text>
                 <Text style={styles.author}> {this.props.post.author}</Text>
+                <Text style={styles.date}> { this.formatDateTime(this.props.post.createdAt)}</Text>
+                
+
                 <View style={styles.footer}>
                     <Text style={styles.likes}>Likes: {this.state.likes.length}</Text>
                     <TouchableOpacity
