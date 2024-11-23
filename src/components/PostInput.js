@@ -1,6 +1,7 @@
 import { TouchableOpacity, StyleSheet, Text, View, TextInput, } from "react-native";
 import { Component } from 'react'
 import Post from "./Post";
+import { db, auth } from '../firebase/config'
 
 
 
@@ -8,19 +9,25 @@ export default class PostInput extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            text: ""
+            content: ""
 
         };
     }
 
-    handleTextChange = (text) => {
-        this.setState({ text })
+    handleTextChange = (content) => {
+        this.setState({ content })
 
 
     }
 
     handleSubmit = () => {
-        console.log(this.state.text)
+        db.collection('posts').add({
+            owner: auth.currentUser.email,
+            content: this.state.content,
+            createdAt: Date.now(),
+        })
+            .then(() => this.setState({ content: "" }))
+            .catch(e => console.log(e))
     }
 
 
@@ -33,17 +40,17 @@ export default class PostInput extends Component {
                     maxLength={280}
                     placeholder="Comparte tu momento!"
                     placeholderTextColor="#aaa"
-                    value={this.state.text}
+                    value={this.state.content}
                     onChangeText={this.handleTextChange} />
                 <View style={styles.footer}>
-                    <Text style={styles.charCount}>{280 - this.state.text.length}</Text>
+                    <Text style={styles.charCount}>{280 - this.state.content.length}</Text>
                     <TouchableOpacity
                         style={[
                             styles.button,
-                            this.state.text.trim().length === 0 && styles.disabledButton,
+                            this.state.content.trim().length === 0 && styles.disabledButton,
                         ]}
                         onPress={this.handleSubmit}
-                        disabled={this.state.text.trim().length === 0}
+                        disabled={this.state.content.trim().length === 0}
                     ><Text style={styles.buttonText}>Post</Text>
                     </TouchableOpacity>
                 </View>
