@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View } from "react-native";
 import {Component} from 'react'
-
+import { auth } from "../firebase/config";
 
 export default class Profile extends Component {
     constructor(props) {
@@ -9,6 +9,14 @@ export default class Profile extends Component {
 
         };
     }
+
+    componentDidMount() {
+        auth.onAuthStateChanged((user) => {
+          if (!user) {
+            this.props.navigation.navigate('Login')
+          }
+        });
+     }
 
     render(){
         return (
