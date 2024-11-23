@@ -9,6 +9,7 @@ export default class Register extends Component {
         this.state = {
             email: '',
             password: '',
+            username: '',
             registered: false,
             errorMsg: '',
         };
@@ -18,12 +19,19 @@ export default class Register extends Component {
         auth.createUserWithEmailAndPassword(email, password)
         .then( response => {
             this.setState({registered: true});
-            console.log('sucess')
-            this.props.navigation.navigate('Login')
+            db.collection('users').add({
+                owner: this.state.email,
+                createdAt: Date.now(),
+                username: this.state.username})
+                .then( response => {
+                    this.props.navigation.navigate('Login')
+                })
+                .catch( error => {
+                    this.setState({errorMsg: 'Fallo en la creacion de user.'})
+                })
         })     
         .catch( error => {
             this.setState({errorMsg: 'Fallo en el registro.'})
-            console.log('fail')
         })
     }
      
@@ -37,7 +45,10 @@ export default class Register extends Component {
                     onChangeText={text => this.setState({email: text})}
                     value= {this.state.email} />
                 <TextInput style={styles.field}
-                    keyboardType='default'
+                    placeholder='username'
+                    onChangeText={text => this.setState({username: text})}
+                    value= {this.state.username} />
+                <TextInput style={styles.field}
                     placeholder='password'
                     secureTextEntry= {true}
                     onChangeText={text => this.setState({password: text})}

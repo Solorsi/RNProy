@@ -25,8 +25,6 @@ export default class PostInput extends Component {
             .catch(e => console.log(e))
     }
 
-
-
     render() {
         return (
             <View style={styles.container}>
