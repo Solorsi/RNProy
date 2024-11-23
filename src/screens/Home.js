@@ -1,5 +1,9 @@
 import { StyleSheet, Text, View } from "react-native";
-import {Component} from 'react'
+import {Component} from 'react';
+import PostList from "../components/PostList";
+import PostInput from "../components/PostInput";
+
+
 
 
 export default class Home extends Component {
@@ -14,6 +18,8 @@ export default class Home extends Component {
         return (
             <View style={styles.container}>
                 <Text>Home</Text>
+                <PostInput/>
+                <PostList/>
             </View>
         );
     }
