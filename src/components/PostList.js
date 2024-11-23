@@ -22,7 +22,7 @@ export default class PostList extends Component {
             snapshot.forEach(doc => {
                 posts.push({
                     id: doc.id,
-                    data: doc.data()
+                    ...doc.data()
                 });
             });
             this.setState({
@@ -39,7 +39,7 @@ export default class PostList extends Component {
                 <FlatList
                     data={this.state.posts}
                     keyExtractor={item => item.id.toString()}
-                    renderItem={({ item }) => <Post post={item.data} />}
+                    renderItem={({ item }) => <Post post={item} />}
                 />
             </View>
         );

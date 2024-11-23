@@ -22,9 +22,10 @@ export default class PostInput extends Component {
 
     handleSubmit = () => {
         db.collection('posts').add({
-            owner: auth.currentUser.email,
+            author: auth.currentUser.email,
             content: this.state.content,
             createdAt: Date.now(),
+            likes:[]
         })
             .then(() => this.setState({ content: "" }))
             .catch(e => console.log(e))
