@@ -1,23 +1,17 @@
-import { TouchableOpacity, StyleSheet, Text, View, TextInput, } from "react-native";
+import { TouchableOpacity, StyleSheet, Text, View, TextInput } from "react-native";
 import { Component } from 'react'
-import Post from "./Post";
 import { db, auth } from '../firebase/config'
-
-
 
 export default class PostInput extends Component {
     constructor(props) {
         super(props);
         this.state = {
             content: ""
-
         };
     }
 
     handleTextChange = (content) => {
         this.setState({ content })
-
-
     }
 
     handleSubmit = () => {
@@ -40,7 +34,6 @@ export default class PostInput extends Component {
                     multiline
                     maxLength={280}
                     placeholder="Comparte tu momento!"
-                    placeholderTextColor="#aaa"
                     value={this.state.content}
                     onChangeText={this.handleTextChange} />
                 <View style={styles.footer}>

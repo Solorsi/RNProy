@@ -1,9 +1,7 @@
-import { TouchableOpacity, StyleSheet, Text, View, TextInput, FlatList } from "react-native";
+import { StyleSheet, View, FlatList } from "react-native";
 import { Component } from 'react'
 import Post from "./Post";
-import { db, auth } from '../firebase/config'
-
-
+import { db } from '../firebase/config'
 
 export default class PostList extends Component {
     constructor(props) {
@@ -35,7 +33,6 @@ export default class PostList extends Component {
     render() {
         return (
             <View style={styles.container} >
-
                 <FlatList
                     data={this.state.posts}
                     keyExtractor={item => item.id.toString()}

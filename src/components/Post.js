@@ -1,11 +1,7 @@
-import { TouchableOpacity, StyleSheet, Text, View, TextInput, } from "react-native";
+import { TouchableOpacity, StyleSheet, Text, View } from "react-native";
 import { Component } from 'react'
 import { auth, db } from "../firebase/config"
 import firebase from "firebase"
-
-
-
-
 
 export default class Post extends Component {
     constructor(props) {
@@ -13,8 +9,6 @@ export default class Post extends Component {
         this.state = {
             likes: this.props.post.likes,
             isLiked: this.props.post.likes.includes(auth.currentUser.email)
-
-
         };
     }
 
@@ -28,10 +22,8 @@ export default class Post extends Component {
                         likes: [...prevState.likes, auth.currentUser.email],
                         isLiked: true
                     }))
-
                 })
                 .catch((error) => console.log("Error:", error));
-
         } else {
             db.collection("posts").doc(this.props.post.id).update({
                 likes: firebase.firestore.FieldValue.arrayRemove(auth.currentUser.email)
@@ -41,18 +33,14 @@ export default class Post extends Component {
                         likes: prevState.likes.filter(email => email !== auth.currentUser.email),
                         isLiked: false
                     }))
-
                 })
                 .catch((error) => console.log("Error:", error));
         }
-
-
     }
 
     formatDateTime =(createdAt)=>{
         const date = new Date(createdAt)
         return date.toLocaleString("es-ES", { dateStyle: "short", timeStyle: "short" }).replace(",", " -");
-
     }
 
     render() {
@@ -61,8 +49,6 @@ export default class Post extends Component {
                 <Text style={styles.content}> {this.props.post.content}</Text>
                 <Text style={styles.author}> {this.props.post.author}</Text>
                 <Text style={styles.date}> { this.formatDateTime(this.props.post.createdAt)}</Text>
-                
-
                 <View style={styles.footer}>
                     <Text style={styles.likes}>Likes: {this.state.likes.length}</Text>
                     <TouchableOpacity
