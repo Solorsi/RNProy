@@ -18,33 +18,33 @@ export default class Login extends Component {
 
     componentDidMount() {
         auth.onAuthStateChanged((user) => {
-          if (user) {
-            this.props.navigation.navigate('HomeMenu')
-          } 
+            if (user) {
+                this.props.navigation.navigate('HomeMenu')
+            }
         });
-     }
+    }
 
-    login(){
+    login() {
+        this.setState({ loading: true, errorPassword: '', errorEmail: '', errorLogin: '' });
         // uso .trim para evitar el error por espacios en blanco
         const email = this.state.email.trim()
         const password = this.state.password.trim()
+        let hasInputError = false
         if (email === null || email === '' || !email.includes('@')) {
             this.setState({
                 errorEmail: 'Correo electrónico invalido'
             });
-            return;
+            hasInputError = true
         }
         if (password === null || password === '' || password.length < 6) {
             this.setState({
-                errorPassword: 'La contraseña no puede estar vacía y debe tener más de 6 caracteres'
+                errorPassword: 'La contraseña debe tener más de 6 caracteres'
             });
-            return;
+            hasInputError = true
         }
-        // if (this.state.errorEmail !== '' || this.state.errorPassword !== '') {
-        //     return;
-        // };
-
-        this.setState({ loading: true, errorPassword: '', errorEmail: '', erorrLogin: '' });
+        if (hasInputError === true) {
+            return;
+        };
 
         auth.signInWithEmailAndPassword(email, password)
             .then((response) => {
@@ -74,7 +74,8 @@ export default class Login extends Component {
                     value={this.state.password} />
                 <Text style={styles.errorText}>{this.state.errorPassword}</Text>
                 <Text style={styles.errorText}>{this.state.errorLogin}</Text>
-                <TouchableOpacity style={styles.button} onPress={() => this.login()}>
+                <TouchableOpacity style={styles.button} onPress={() => this.login()}
+                    disabled={this.state.email === '' || this.state.password === ''}>
                     <Text>Ingresar</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.button} onPress={() => this.props.navigation.navigate('Register')}>
