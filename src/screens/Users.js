@@ -9,6 +9,7 @@ export default class Users extends Component {
         super(props);
         this.state = {
             users: [],
+            filteredUsers: [],
         };
     }
 
@@ -28,23 +29,16 @@ export default class Users extends Component {
             });
             this.setState({
                 users: users,
+                filteredUsers: users,
             });
         });
     }
 
-    filterUsers = (search) => {
-        db.collection('users').where("username", "==", search).onSnapshot(snapshot => {
-            let users = [];
-            snapshot.forEach(doc => {
-                users.push({
-                    id: doc.id,
-                    data: doc.data(),
-                });
-            });
-            this.setState({
-                users: users,
-            });
-        });
+    filterUsers=(search) =>{
+        const filteredUsers = this.state.users.filter(user =>
+            user.data.username.includes(search.toLowerCase())
+        );
+        this.setState({ filteredUsers });
     }
 
     render() {
@@ -52,7 +46,7 @@ export default class Users extends Component {
             <View style={styles.container}>
                 <Text style={styles.header}>Search users</Text>
                 <SearchInput filterUsers={this.filterUsers} />
-                <UserList users={this.state.users} />
+                <UserList users={this.state.filteredUsers} />
             </View>
         );
     }
