@@ -50,7 +50,7 @@ export default class Users extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <Text>Search users</Text>
+                <Text style={styles.header}>Search users</Text>
                 <SearchInput filterUsers={this.filterUsers} />
                 <UserList users={this.state.users} />
             </View>
@@ -61,6 +61,23 @@ export default class Users extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#eaeaea'
+        backgroundColor: '#eaeaea',
+        padding: 20,
     },
+    header: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        color: '#4169E1',
+        marginBottom: 15,
+        textAlign: 'center',
+    },
+    input: {
+        borderWidth: 1,
+        borderColor: '#4169E1',
+        borderRadius: 5,
+        padding: 10,
+        fontSize: 16,
+        color: '#333',
+        backgroundColor: '#fff',
+    }
 }) 
