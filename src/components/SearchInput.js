@@ -1,49 +1,34 @@
-import { TouchableOpacity, StyleSheet, Text, View, TextInput } from "react-native";
+import { StyleSheet, View, TextInput, TouchableOpacity, Text } from "react-native";
 import { Component } from 'react'
-import { db, auth } from '../firebase/config'
+import User from "./User";
 
-export default class PostInput extends Component {
+export default class SearchInput extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            content: ""
+            search: ""
         };
     }
-
-    handleTextChange = (content) => {
-        this.setState({ content })
+    handleTextChange = (search) => {
+        this.setState({ search })
     }
-
-    handleSubmit = () => {
-        db.collection('posts').add({
-            author: auth.currentUser.email,
-            content: this.state.content,
-            createdAt: Date.now(),
-            likes:[]
-        })
-            .then(() => this.setState({ content: "" }))
-            .catch(e => console.log(e))
-    }
-
     render() {
         return (
             <View style={styles.container}>
                 <TextInput style={styles.input}
-                    multiline
-                    maxLength={280}
-                    placeholder="Comparte tu momento!"
-                    value={this.state.content}
-                    onChangeText={this.handleTextChange} />
+                    placeholder="Buscar un usuario"
+                    value={this.state.search}
+                    onChangeText={this.handleTextChange}
+                />
                 <View style={styles.footer}>
-                    <Text style={styles.charCount}>{280 - this.state.content.length}</Text>
                     <TouchableOpacity
                         style={[
                             styles.button,
-                            this.state.content.trim().length === 0 && styles.disabledButton,
+                            this.state.search.trim().length === 0 && styles.disabledButton,
                         ]}
-                        onPress={this.handleSubmit}
-                        disabled={this.state.content.trim().length === 0}
-                    ><Text style={styles.buttonText}>Post</Text>
+                        onPress={() => this.props.filterUsers(this.state.search)}
+                        disabled={this.state.search.trim().length === 0}
+                    ><Text style={styles.buttonText}>Search</Text>
                     </TouchableOpacity>
                 </View>
             </View>
@@ -72,7 +57,6 @@ const styles = StyleSheet.create({
         color: '#333',
         textAlignVertical: 'top',
         minHeight: 80,
-
     },
 
     footer: {
@@ -80,25 +64,15 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
         marginTop: 10,
-
     },
 
     button: {
         color: '#fff',
         fontSize: 16,
         fontWeight: 'bold',
-
     },
 
     disabledButton: {
         backgroundColor: '#AAB8C2',
-
-
-    },
-
-    charCount: {
-        fontSize: 14,
-        color: '#aaa',
-
     },
 }) 

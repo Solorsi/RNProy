@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { Component } from 'react'
 import { db, auth } from "../firebase/config";
 import PostList from "../components/PostList";
@@ -11,6 +11,7 @@ export default class Profile extends Component {
             user: null,
             loadingUser: true,
             loadingPost: true,
+            loadingLogout: false,
         };
     }
 
@@ -46,13 +47,21 @@ export default class Profile extends Component {
         });
     }
 
+    logout() {
+        auth.signOut()
+    }
+
     render() {
         return (
             <View style={styles.container}>
                 <Text>Profile</Text>
-                <Text>Username: {this.state.loadingUser === false ? '@'+this.state.user.username : 'Loading'}</Text>
+                <Text>Username: {this.state.loadingUser === false ? '@' + this.state.user.username : 'Loading'}</Text>
                 <Text>Email: {this.state.loadingUser === false ? this.state.user.owner : ''}</Text>
                 <Text>Cantidad de posteos: {this.state.loadingPost === false ? this.state.posts.length : ''}</Text>
+                <TouchableOpacity style={styles.button} onPress={() => this.logout()}
+                    disabled={this.state.loadingLogout === true}>
+                    <Text>Log Out</Text>
+                </TouchableOpacity>
                 <Text>My posts</Text>
                 <PostList posts={this.state.loadingPost === false ? this.state.posts : ''} />
             </View>
@@ -64,5 +73,11 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#eaeaea'
+    },
+    button: {
+        backgroundColor: 'grey',
+        borderRadius: 10,
+        margin: 10,
+        height: 40,
     },
 }) 

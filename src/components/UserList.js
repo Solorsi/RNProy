@@ -1,15 +1,15 @@
 import { StyleSheet, View, FlatList } from "react-native";
 import { Component } from 'react'
-import Post from "./Post";
+import User from "./User";
 
-export default class PostList extends Component {
+export default class UserList extends Component {
     render() {
         return (
             <View style={styles.container} >
                 <FlatList
-                    data={this.props.posts}
+                    data={this.props.users}
                     keyExtractor={item => item.id.toString()}
-                    renderItem={({ item }) => <Post post={{id: item.id, ...item.data}} />}
+                    renderItem={({ item }) => <User user={{id: item.id, ...item.data}} />}
                 />
             </View>
         );
