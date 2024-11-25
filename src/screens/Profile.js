@@ -54,10 +54,11 @@ export default class Profile extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <Text style={styles.title}>Profile</Text>
                 <Image style={styles.image}
                     source={{uri:'https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png'}}
-                    resizeMode='contain'/>
+                    resizeMode='contain'
+                />
+                <Text style={styles.title}>Profile</Text>
                 <Text style={styles.userInfo}>Username: {this.state.loadingUser === false ? '@' + this.state.user.username : 'Loading'}</Text>
                 <Text style={styles.userInfo}>Email: {this.state.loadingUser === false ? this.state.user.owner : ''}</Text>
                 <Text style={styles.userInfo}>Post count: {this.state.loadingPost === false ? this.state.posts.length : ''}</Text>
@@ -89,12 +90,12 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: '#4169E1',
         textAlign: 'center',
-        marginBottom: 20,
+        marginBottom: 10, 
     },
     userInfo: {
         fontSize: 16,
         color: '#333',
-        marginBottom: 10,
+        marginBottom: 8, 
     },
     button: {
         backgroundColor: '#4169E1',
@@ -102,32 +103,22 @@ const styles = StyleSheet.create({
         height: 50,
         justifyContent: 'center',
         alignItems: 'center',
-        marginVertical: 15,
-    },
-    buttonDisabled: {
-        backgroundColor: '#AAB8C2',
-    },
-    buttonText: {
-        color: '#fff',
-        fontSize: 16,
-        fontWeight: 'bold',
+        marginVertical: 10, 
     },
     sectionTitle: {
-        fontSize: 20,
+        fontSize: 18, 
         fontWeight: 'bold',
         color: '#4169E1',
-        marginTop: 20,
-        marginBottom: 10,
-    }, 
-    image:{
-       
-            width: 100, 
-            height: 100, 
-            borderRadius: 50, 
-            alignSelf: 'center', 
-            marginBottom: 20, 
-            borderWidth: 2, 
-            borderColor: '#ccc', 
-        
+        marginTop: 15, 
+        marginBottom: 5, 
     },
-}) 
+    image: {
+        width: 70,
+        height: 70,
+        borderRadius: 50,
+        alignSelf: 'center',
+        marginBottom: 15, 
+        borderWidth: 2,
+        borderColor: '#ccc',
+    },
+});

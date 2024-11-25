@@ -1,7 +1,6 @@
 import { StyleSheet, Text, View } from "react-native";
 import {Component} from 'react';
 import PostList from "../components/PostList";
-import PostInput from "../components/PostInput";
 import { db, auth } from "../firebase/config";
 
 export default class Home extends Component {
@@ -38,10 +37,7 @@ export default class Home extends Component {
         return (
             <View style={styles.container}>
                 <View style={styles.header}>
-                    <Text style={styles.headerText}>Welcome to SunBreeze</Text>
-                </View>
-                <View style={styles.postInputContainer}>
-                    <PostInput />
+                    <Text style={styles.headerText}>Welcome!</Text>
                 </View>
                 <View style={styles.postListContainer}>
                     <Text style={styles.feedText}>Feed</Text>
@@ -70,9 +66,6 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: 'bold',
         color: '#fff',
-    },
-    postInputContainer: {
-        marginBottom: 20,
     },
     postListContainer: {
         flex: 1,

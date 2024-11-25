@@ -1,8 +1,9 @@
-import { SimpleLineIcons, AntDesign} from '@expo/vector-icons';
+import { SimpleLineIcons, AntDesign, FontAwesome6} from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Home from '../screens/Home'
 import Profile from '../screens/Profile'
 import Users from '../screens/Users';
+import NewPost from '../screens/NewPost'
 
 const Tab = createBottomTabNavigator();
 
@@ -25,6 +26,15 @@ function HomeMenu() {
             tabBarShowLabel: false, 
             headerShown: false, 
             tabBarIcon: () => (<AntDesign name='search1' size={24} color='black'/>), 
+          }}
+        />
+        <Tab.Screen 
+          name="NewPost" 
+          component={NewPost} 
+          options={{
+            tabBarShowLabel: false, 
+            headerShown: false, 
+            tabBarIcon: () => (<FontAwesome6 name='add' size={24} color='black'/>), 
           }}
         />
         <Tab.Screen 
