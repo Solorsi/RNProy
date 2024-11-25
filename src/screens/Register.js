@@ -38,13 +38,13 @@ export default class Register extends Component {
             });
             hasInputError = true
         }
-        else if (username === null || username === '' || username.length < 6) {
+        if (username === null || username === '' || username.length < 6) {
             this.setState({
                 errorUsername: 'El username debe tener más de 6 caracteres'
             });
             hasInputError = true
         }
-        else if (password === null || password === '' || password.length < 6) {
+        if (password === null || password === '' || password.length < 6) {
             this.setState({
                 errorPassword: 'La contraseña debe tener más de 6 caracteres'
             });
