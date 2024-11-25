@@ -6,7 +6,8 @@ export default class PostInput extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            content: ""
+            content: "",
+            loadingPost: false,
         };
     }
 
@@ -15,14 +16,15 @@ export default class PostInput extends Component {
     }
 
     handleSubmit = () => {
+        this.setState({loadingPost: true})
         db.collection('posts').add({
             author: auth.currentUser.email,
             content: this.state.content,
             createdAt: Date.now(),
             likes:[]
         })
-            .then(() => this.setState({ content: "" }))
-            .catch(e => console.log(e))
+            .then(() => this.setState({ content: "" , loadingPost: false}))
+            .catch(e => this.setState({loadingPost: false}))
     }
 
     render() {
@@ -31,7 +33,7 @@ export default class PostInput extends Component {
                 <TextInput style={styles.input}
                     multiline
                     maxLength={280}
-                    placeholder="Comparte tu momento!"
+                    placeholder="Share your opinion!"
                     value={this.state.content}
                     onChangeText={this.handleTextChange} />
                 <View style={styles.footer}>
@@ -42,8 +44,8 @@ export default class PostInput extends Component {
                             this.state.content.trim().length === 0 && styles.disabledButton,
                         ]}
                         onPress={this.handleSubmit}
-                        disabled={this.state.content.trim().length === 0}
-                    ><Text style={styles.buttonText}>Post</Text>
+                        disabled={this.state.content.trim().length === 0 || this.state.loadingPost === true}
+                    ><Text style={styles.buttonText}>Create post</Text>
                     </TouchableOpacity>
                 </View>
             </View>

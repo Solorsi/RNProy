@@ -60,7 +60,7 @@ export default class Register extends Component {
                 db.collection('users').add({
                     owner: this.state.email,
                     createdAt: Date.now(),
-                    username: this.state.username
+                    username: this.state.username.toLowerCase()
                 })
                     .then(response => {
                         this.props.navigation.navigate('Login')
@@ -77,32 +77,44 @@ export default class Register extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <Text>Registro</Text>
-                <TextInput style={styles.field}
-                    keyboardType='email-adress'
-                    placeholder='email'
-                    onChangeText={text => this.setState({ email: text })}
-                    value={this.state.email} />
+                <Text style={styles.title}>Register</Text>
+                <TextInput
+                    style={styles.input}
+                    keyboardType="email-address"
+                    placeholder="Email adress"
+                    onChangeText={(text) => this.setState({ email: text })}
+                    value={this.state.email}
+                />
                 <Text style={styles.errorText}>{this.state.errorEmail}</Text>
-                <TextInput style={styles.field}
-                    placeholder='username'
-                    onChangeText={text => this.setState({ username: text })}
-                    value={this.state.username} />
+                <TextInput
+                    style={styles.input}
+                    placeholder="Username"
+                    onChangeText={(text) => this.setState({ username: text })}
+                    value={this.state.username}
+                />
                 <Text style={styles.errorText}>{this.state.errorUsername}</Text>
-                <TextInput style={styles.field}
-                    placeholder='password'
+                <TextInput
+                    style={styles.input}
+                    placeholder="Password"
                     secureTextEntry={true}
-                    onChangeText={text => this.setState({ password: text })}
-                    value={this.state.password} />
+                    onChangeText={(text) => this.setState({ password: text })}
+                    value={this.state.password}
+                />
                 <Text style={styles.errorText}>{this.state.errorPassword}</Text>
-                <TouchableOpacity style={styles.button} onPress={() => this.register()}
-                    disabled={this.state.email === '' || this.state.password === '' || this.state.username === ''}>
-                    <Text>Registro</Text>
+                <Text style={styles.errorText}>{this.state.errorRegister}</Text>
+                <TouchableOpacity
+                    style={[
+                        styles.button,
+                        (this.state.email === '' || this.state.password === '' || this.state.username === '') && styles.disabledButton,
+                    ]}
+                    onPress={() => this.register()}
+                    disabled={this.state.email === '' || this.state.password === '' || this.state.username === ''}
+                >
+                    <Text style={styles.buttonText}>Register</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.button} onPress={() => this.props.navigation.navigate('Login')}>
-                    <Text>Ir a Login </Text>
+                <TouchableOpacity style={styles.link} onPress={() => this.props.navigation.navigate('Login')}>
+                    <Text style={styles.linkText}>Log In</Text>
                 </TouchableOpacity>
-
             </View>
         );
     }
@@ -111,30 +123,56 @@ export default class Register extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#eaeaea'
-    },
-    field: {
-        backgroundColor: 'white',
-        height: 40,
-        margin: 10,
+        backgroundColor: '#eaeaea',
+        justifyContent: 'center',
         padding: 20,
+    },
+    title: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        color: '#4169E1', 
+        textAlign: 'center',
+        marginBottom: 20,
+    },
+    input: {
+        backgroundColor: 'white',
+        height: 50,
+        marginBottom: 15,
+        paddingHorizontal: 15,
         borderWidth: 2,
-        borderColor: '#000',
+        borderColor: 'black', 
         borderRadius: 10,
-        borderStyle: 'solid',
+        fontSize: 16,
+        color: '#333',
     },
     button: {
-        backgroundColor: 'grey',
+        backgroundColor: '#4169E1', 
         borderRadius: 10,
-        margin: 10,
-        height: 40,
+        height: 50,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginBottom: 15,
+    },
+    disabledButton: {
+        backgroundColor: '#AAB8C2',
+    },
+    buttonText: {
+        color: '#fff', 
+        fontSize: 16,
+        fontWeight: 'bold',
     },
     errorText: {
-        color: "red",
+        color: 'red',
         fontSize: 14,
-        marginTop: 5,
-        marginBottom: 5,
-        fontWeight: "bold",
-        textAlign: "left",
+        marginBottom: 10,
+        fontWeight: 'bold',
+    },
+    link: {
+        marginTop: 10,
+        alignItems: 'center',
+    },
+    linkText: {
+        color: '#4169E1', 
+        fontSize: 14,
     },
 }) 

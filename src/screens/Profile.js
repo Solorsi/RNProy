@@ -54,16 +54,22 @@ export default class Profile extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <Text>Profile</Text>
-                <Text>Username: {this.state.loadingUser === false ? '@' + this.state.user.username : 'Loading'}</Text>
-                <Text>Email: {this.state.loadingUser === false ? this.state.user.owner : ''}</Text>
-                <Text>Cantidad de posteos: {this.state.loadingPost === false ? this.state.posts.length : ''}</Text>
-                <TouchableOpacity style={styles.button} onPress={() => this.logout()}
-                    disabled={this.state.loadingLogout === true}>
-                    <Text>Log Out</Text>
+                <Text style={styles.title}>Profile</Text>
+                <Text style={styles.userInfo}>Username: {this.state.loadingUser === false ? '@' + this.state.user.username : 'Loading'}</Text>
+                <Text style={styles.userInfo}>Email: {this.state.loadingUser === false ? this.state.user.owner : ''}</Text>
+                <Text style={styles.userInfo}>Post count: {this.state.loadingPost === false ? this.state.posts.length : ''}</Text>
+                <TouchableOpacity
+                    style={[
+                        styles.button,
+                        this.state.loadingLogout && styles.buttonDisabled,
+                    ]}
+                    onPress={() => this.logout()}
+                    disabled={this.state.loadingLogout === true}
+                >
+                    <Text style={styles.buttonText}>Log Out</Text>
                 </TouchableOpacity>
-                <Text>My posts</Text>
-                <PostList posts={this.state.loadingPost === false ? this.state.posts : ''} />
+                <Text style={styles.sectionTitle}>My Posts</Text>
+                <PostList posts={this.state.posts} />
             </View>
         );
     }
@@ -72,12 +78,42 @@ export default class Profile extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#eaeaea'
+        backgroundColor: '#eaeaea',
+        padding: 20,
+    },
+    title: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        color: '#4169E1',
+        textAlign: 'center',
+        marginBottom: 20,
+    },
+    userInfo: {
+        fontSize: 16,
+        color: '#333',
+        marginBottom: 10,
     },
     button: {
-        backgroundColor: 'grey',
+        backgroundColor: '#4169E1',
         borderRadius: 10,
-        margin: 10,
-        height: 40,
+        height: 50,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginVertical: 15,
+    },
+    buttonDisabled: {
+        backgroundColor: '#AAB8C2',
+    },
+    buttonText: {
+        color: '#fff',
+        fontSize: 16,
+        fontWeight: 'bold',
+    },
+    sectionTitle: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        color: '#4169E1',
+        marginTop: 20,
+        marginBottom: 10,
     },
 }) 
