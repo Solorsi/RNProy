@@ -13,7 +13,7 @@ export default class PostList extends Component {
                     <FlatList
                         data={this.props.posts}
                         keyExtractor={item => item.id.toString()}
-                        renderItem={({ item }) => <Post post={{ id: item.id, ...item.data }} />}
+                        renderItem={({ item }) => <Post post={item} />}
                     />
                 )}
             </View>
