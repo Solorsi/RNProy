@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity, Image } from "react-native";
 import { Component } from 'react'
 import { db, auth } from "../firebase/config";
 import PostList from "../components/PostList";
@@ -55,6 +55,9 @@ export default class Profile extends Component {
         return (
             <View style={styles.container}>
                 <Text style={styles.title}>Profile</Text>
+                <Image style={styles.image}
+                    source={{uri:'https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png'}}
+                    resizeMode='contain'/>
                 <Text style={styles.userInfo}>Username: {this.state.loadingUser === false ? '@' + this.state.user.username : 'Loading'}</Text>
                 <Text style={styles.userInfo}>Email: {this.state.loadingUser === false ? this.state.user.owner : ''}</Text>
                 <Text style={styles.userInfo}>Post count: {this.state.loadingPost === false ? this.state.posts.length : ''}</Text>
@@ -115,5 +118,16 @@ const styles = StyleSheet.create({
         color: '#4169E1',
         marginTop: 20,
         marginBottom: 10,
+    }, 
+    image:{
+       
+            width: 100, 
+            height: 100, 
+            borderRadius: 50, 
+            alignSelf: 'center', 
+            marginBottom: 20, 
+            borderWidth: 2, 
+            borderColor: '#ccc', 
+        
     },
 }) 

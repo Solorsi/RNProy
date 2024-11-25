@@ -1,8 +1,7 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, TextInput } from "react-native";
 import { Component } from 'react';
 import { db, auth } from "../firebase/config";
 import UserList from "../components/UserList";
-import SearchInput from "../components/SearchInput";
 
 export default class Users extends Component {
     constructor(props) {
@@ -10,6 +9,7 @@ export default class Users extends Component {
         this.state = {
             users: [],
             filteredUsers: [],
+            search: ""
         };
     }
 
@@ -34,18 +34,23 @@ export default class Users extends Component {
         });
     }
 
-    filterUsers=(search) =>{
+    filterUsers(search) {
         const filteredUsers = this.state.users.filter(user =>
-            user.data.username.includes(search.toLowerCase())
+            user.data.username.toLowerCase().includes(search.toLowerCase())
         );
-        this.setState({ filteredUsers });
+        this.setState({ filteredUsers, search });
     }
 
     render() {
         return (
             <View style={styles.container}>
                 <Text style={styles.header}>Search users</Text>
-                <SearchInput filterUsers={this.filterUsers} />
+                <TextInput
+                    style={styles.input}
+                    placeholder="Buscar un usuario"
+                    value={this.state.search}
+                    onChangeText={text => this.filterUsers(text)}
+                />
                 <UserList users={this.state.filteredUsers} />
             </View>
         );
