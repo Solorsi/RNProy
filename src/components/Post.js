@@ -39,6 +39,18 @@ export default class Post extends Component {
         }
     }
 
+    deletePost = () => {
+        db.collection("posts")
+          .doc(this.props.post.id)
+          .delete()
+          .then(() => {
+            console.log("Post eliminado");
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      };
+
     render() {
         return (
             <View style={styles.container}>
@@ -63,7 +75,7 @@ export default class Post extends Component {
                     {this.props.post.author === auth.currentUser.email && (
                         <TouchableOpacity
                             style={styles.deleteButton}
-                            onPress={this.handleDelete}
+                            onPress={this.deletePost}
                         >
                             <Text style={styles.deleteButtonText}>Eliminar</Text>
                         </TouchableOpacity>

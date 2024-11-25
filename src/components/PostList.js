@@ -1,16 +1,21 @@
-import { StyleSheet, View, FlatList } from "react-native";
+import { StyleSheet, View, FlatList, ActivityIndicator } from "react-native";
 import { Component } from 'react'
 import Post from "./Post";
 
 export default class PostList extends Component {
+
     render() {
         return (
             <View style={styles.container} >
-                <FlatList
-                    data={this.props.posts}
-                    keyExtractor={item => item.id.toString()}
-                    renderItem={({ item }) => <Post post={{id: item.id, ...item.data}} />}
-                />
+                {this.props.loading ? (
+                    <ActivityIndicator size="large" color="#1DA1F2" />
+                ) : (
+                    <FlatList
+                        data={this.props.posts}
+                        keyExtractor={item => item.id.toString()}
+                        renderItem={({ item }) => <Post post={{ id: item.id, ...item.data }} />}
+                    />
+                )}
             </View>
         );
     }

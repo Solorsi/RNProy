@@ -16,15 +16,15 @@ export default class PostInput extends Component {
     }
 
     handleSubmit = () => {
-        this.setState({loadingPost: true})
+        this.setState({ loadingPost: true })
         db.collection('posts').add({
             author: auth.currentUser.email,
             content: this.state.content,
             createdAt: Date.now(),
-            likes:[]
+            likes: []
         })
-            .then(() => this.setState({ content: "" , loadingPost: false}))
-            .catch(e => this.setState({loadingPost: false}))
+            .then(() => this.setState({ content: "", loadingPost: false }))
+            .catch(e => this.setState({ loadingPost: false }))
     }
 
     render() {
@@ -60,21 +60,19 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         borderWidth: 1,
         borderColor: '#ddd',
-        margin: 10,
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.1,
-        shadowRadius: 4,
-        elevation: 2,
     },
 
     input: {
         fontSize: 16,
-        lineHeight: 24,
+        lineHeight: 20,
         color: '#333',
         textAlignVertical: 'top',
         minHeight: 80,
-
+        padding: 10,
+        backgroundColor: '#f9f9f9',
+        borderRadius: 8,
+        borderWidth: 1,
+        borderColor: '#ccc',
     },
 
     footer: {
@@ -82,25 +80,28 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
         marginTop: 10,
-
     },
 
     button: {
-        color: '#fff',
-        fontSize: 16,
-        fontWeight: 'bold',
-
+        backgroundColor: '#1E90FF',
+        paddingVertical: 10,
+        paddingHorizontal: 20,
+        borderRadius: 8,
     },
 
     disabledButton: {
         backgroundColor: '#AAB8C2',
+    },
 
-
+    buttonText: {
+        color: '#fff',
+        fontSize: 16,
+        fontWeight: 'bold',
+        textAlign: 'center',
     },
 
     charCount: {
         fontSize: 14,
-        color: '#aaa',
-
+        color: '#888',
     },
 }) 

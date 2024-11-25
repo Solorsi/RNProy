@@ -9,6 +9,7 @@ export default class Home extends Component {
         super(props);
         this.state = {
             posts: [],
+            loading:true
         };
     }
 
@@ -28,6 +29,7 @@ export default class Home extends Component {
             });
             this.setState({
                 posts: posts,
+                loading:false
             });
         });
      }
@@ -35,18 +37,50 @@ export default class Home extends Component {
     render(){
         return (
             <View style={styles.container}>
-                <Text>Home</Text>
-                <Text>Feed</Text>
-                <PostInput/>
-                <PostList posts={this.state.posts}/>
+                <View style={styles.header}>
+                    <Text style={styles.headerText}>Welcome to SunBreeze</Text>
+                </View>
+                <View style={styles.postInputContainer}>
+                    <PostInput />
+                </View>
+                <View style={styles.postListContainer}>
+                    <Text style={styles.feedText}>Feed</Text>
+                    <PostList posts={this.state.posts} loading={this.state.loading} />
+                </View>
             </View>
         );
     }
 } 
 
 const styles = StyleSheet.create({
-    container:{
-        flex:1,
-        backgroundColor: '#eaeaea'
+    container: {
+        flex: 1,
+        backgroundColor: '#f5f5f5',
+        paddingHorizontal: 20,
+        paddingTop: 20,
+    },
+    header: {
+        backgroundColor: '#1E90FF',
+        paddingVertical: 15,
+        borderRadius: 10,
+        marginBottom: 20,
+        alignItems: 'center',
+    },
+    headerText: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        color: '#fff',
+    },
+    postInputContainer: {
+        marginBottom: 20,
+    },
+    postListContainer: {
+        flex: 1,
+    },
+    feedText: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        color: '#333333',
+        marginBottom: 10,
     },
 }) 
