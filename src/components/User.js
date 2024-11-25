@@ -11,7 +11,7 @@ export default class User extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <Text style={styles.username}> {this.props.user.username}</Text>
+                <Text style={styles.username}> {this.props.user.data.username}</Text>
             </View>
         );
     }

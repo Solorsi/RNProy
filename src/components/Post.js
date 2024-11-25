@@ -1,5 +1,5 @@
 import { TouchableOpacity, StyleSheet, Text, View } from "react-native";
-import { AntDesign} from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons';
 import { Component } from 'react'
 import { auth, db } from "../firebase/config"
 import firebase from "firebase"
@@ -8,8 +8,8 @@ export default class Post extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            likes: this.props.post.likes,
-            isLiked: this.props.post.likes.includes(auth.currentUser.email)
+            likes: this.props.post.data.likes,
+            isLiked: this.props.post.data.likes.includes(auth.currentUser.email)
         };
     }
 
@@ -19,10 +19,10 @@ export default class Post extends Component {
                 likes: firebase.firestore.FieldValue.arrayUnion(auth.currentUser.email)
             })
                 .then(() => {
-                    this.setState((prevState) => ({
-                        likes: [...prevState.likes, auth.currentUser.email],
+                    this.setState({
+                        likes: this.props.post.data.likes.length,
                         isLiked: true
-                    }))
+                    })
                 })
                 .catch((error) => console.log("Error:", error));
         } else {
@@ -30,10 +30,10 @@ export default class Post extends Component {
                 likes: firebase.firestore.FieldValue.arrayRemove(auth.currentUser.email)
             })
                 .then(() => {
-                    this.setState((prevState) => ({
-                        likes: prevState.likes.filter(email => email !== auth.currentUser.email),
+                    this.setState({
+                        likes: this.props.post.data.likes.length,
                         isLiked: false
-                    }))
+                    })
                 })
                 .catch((error) => console.log("Error:", error));
         }
@@ -41,23 +41,23 @@ export default class Post extends Component {
 
     deletePost = () => {
         db.collection("posts")
-          .doc(this.props.post.id)
-          .delete()
-          .then(() => {
-            console.log("Post eliminado");
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      };
+            .doc(this.props.post.id)
+            .delete()
+            .then(() => {
+                console.log("Post eliminado");
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    };
 
     render() {
         return (
             <View style={styles.container}>
                 <View style={styles.header}>
-                    <Text style={styles.author}>{this.props.post.author}</Text>
+                    <Text style={styles.author}>{this.props.post.data.author}</Text>
                 </View>
-                <Text style={styles.content}>{this.props.post.content}</Text>
+                <Text style={styles.content}>{this.props.post.data.content}</Text>
                 <View style={styles.footer}>
                     <View style={styles.likesContainer}>
                         <TouchableOpacity
@@ -70,9 +70,9 @@ export default class Post extends Component {
                                 {this.state.isLiked ? <AntDesign name="heart" /> : <AntDesign name="hearto" />}
                             </Text>
                         </TouchableOpacity>
-                        <Text style={styles.likes}>{this.state.likes.length} Likes</Text>
+                        <Text style={styles.likes}>{this.props.post.data.likes.length} Likes</Text>
                     </View>
-                    {this.props.post.author === auth.currentUser.email && (
+                    {this.props.post.data.author === auth.currentUser.email && (
                         <TouchableOpacity
                             style={styles.deleteButton}
                             onPress={this.deletePost}

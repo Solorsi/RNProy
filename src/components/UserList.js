@@ -9,7 +9,7 @@ export default class UserList extends Component {
                 <FlatList
                     data={this.props.users}
                     keyExtractor={item => item.id.toString()}
-                    renderItem={({ item }) => <User user={{id: item.id, ...item.data}} />}
+                    renderItem={({ item }) => <User user={item} />}
                 />
             </View>
         );
